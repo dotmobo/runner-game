@@ -1,51 +1,54 @@
-local imgCar
-local animCar
-local carY = WIN_HEIGHT-48-20
-local carYspeed = 0
-local jumpHeight = -250
-local carGravity = -500
-local carGroundY = WIN_HEIGHT-48-20
+local player = {}
+player.width = 48
+player.height = 48
+player.x = 72
+player.y = WIN_HEIGHT-player.height-20
+player.speedY = 0
+player.gravity = -500
+player.jumpHeight = -250
+player.groundY = WIN_HEIGHT-48-20
+
 
 function loadPlayer()
-    imgCar = love.graphics.newImage("images/car.png")
-    imgCar:setFilter("nearest","nearest")
-    animCar = newAnimation(imgCar, 48, 48, 0)
+    player.img = love.graphics.newImage("images/car.png")
+    player.img:setFilter("nearest","nearest")
+    player.anim = newAnimation(player.img, player.width, player.height, 0)
+    return player
 end
 
 function updatePlayer(dt)
-    animCar.currentTime = animCar.currentTime + dt*10
-    -- if animCar.currentTime >= animCar.duration then
-    --     animCar.currentTime = animCar.currentTime - animation.duration
+    player.anim.currentTime = player.anim.currentTime + dt*10
+    -- if player.anim.currentTime >= player.anim.duration then
+    --     player.anim.currentTime = player.anim.currentTime - animation.duration
     -- end
-    
+
     -- android touch
     local touches = love.touch.getTouches()
     for _, touch in ipairs(touches) do
         local tx, ty = love.touch.getPosition(touch)
-        if carYspeed == 0 then
-            carYspeed = jumpHeight
+        if player.speedY == 0 then
+            player.speedY = player.jumpHeight
         end
     end
     -- keyboard
 	if love.keyboard.isDown('space') then
-        if carYspeed == 0 then
-            carYspeed = jumpHeight
+        if player.speedY == 0 then
+            player.speedY = player.jumpHeight
         end
     end
     -- jumping
-    if carYspeed ~= 0 then
-		carY = carY + carYspeed * dt
-		carYspeed = carYspeed - carGravity * dt
+    if player.speedY ~= 0 then
+		player.y = player.y + player.speedY * dt
+		player.speedY = player.speedY - player.gravity * dt
 	end
     -- stop jumping
-    if carY > carGroundY then
-		carYspeed = 0
-        carY = carGroundY
+    if player.y > player.groundY then
+		player.speedY = 0
+        player.y = player.groundY
 	end
 end
 
 function drawPlayer()
-    -- love.graphics.draw(imgCar,car, 40, carY )
-    local spriteNum = math.floor(animCar.currentTime % #animCar.quads) + 1
-    love.graphics.draw(animCar.spriteSheet, animCar.quads[spriteNum], 40, carY, 0, 1)
+    local spriteNum = math.floor(player.anim.currentTime % #player.anim.quads) + 1
+    love.graphics.draw(player.anim.spriteSheet, player.anim.quads[spriteNum], player.x, player.y, 0, 1)
 end

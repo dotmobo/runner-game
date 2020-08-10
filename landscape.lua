@@ -26,9 +26,9 @@ function loadLandscape()
 end
 
 function updateLandscape(dt)
-    moutainsBackX = (moutainsBackX + 20*dt) % WIN_WIDTH
-    moutainsFrontX = (moutainsFrontX + 40*dt) % WIN_WIDTH
-    treesX = (treesX + 70*dt) % WIN_WIDTH
+    moutainsBackX = (moutainsBackX + 30*dt) % WIN_WIDTH
+    moutainsFrontX = (moutainsFrontX + 60*dt) % WIN_WIDTH
+    treesX = (treesX + 180*dt) % WIN_WIDTH
 end
 
 function drawLandscape()
