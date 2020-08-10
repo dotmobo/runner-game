@@ -14,3 +14,10 @@ function newAnimation(image, width, height, duration)
  
     return animation
 end
+
+function setScale()
+    local scale = love.graphics.getWidth() / WIN_WIDTH
+    local scaleY = love.graphics.getHeight() / WIN_HEIGHT
+    if scaleY < scale then scale = scaleY end
+    love.graphics.scale(scale)
+end
