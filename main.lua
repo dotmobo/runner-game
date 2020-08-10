@@ -1,4 +1,4 @@
-
+require('utils')
 
 local windowWidth = WIN_WIDTH
 local windowHeight = WIN_HEIGHT
@@ -12,6 +12,7 @@ local treesX = 0
 local ground
 
 local imgCar
+local animCar
 local carY = WIN_HEIGHT-48-20
 local carYspeed = 0
 local jumpHeight = -250
@@ -41,12 +42,18 @@ function love.load()
 
     imgCar = love.graphics.newImage("images/car.png")
     imgCar:setFilter("nearest","nearest")
+    animCar = newAnimation(imgCar, 48, 48, 0)
 end
 
 function love.update(dt)
     moutainsBackX = (moutainsBackX + 20*dt) % WIN_WIDTH
     moutainsFrontX = (moutainsFrontX + 40*dt) % WIN_WIDTH
     treesX = (treesX + 70*dt) % WIN_WIDTH
+
+    animCar.currentTime = animCar.currentTime + dt*10
+    -- if animCar.currentTime >= animCar.duration then
+    --     animCar.currentTime = animCar.currentTime - animation.duration
+    -- end
     
     -- This is in charge of player jumping.
 	if love.keyboard.isDown('space') then                     -- Whenever the player presses or holds down the Spacebar:
@@ -80,7 +87,9 @@ function love.draw()
 
     love.graphics.draw(imgGround,ground, 0, 0)
 
-    love.graphics.draw(imgCar,car, 40, carY )
+    -- love.graphics.draw(imgCar,car, 40, carY )
+    local spriteNum = math.floor(animCar.currentTime % #animCar.quads) + 1
+    love.graphics.draw(animCar.spriteSheet, animCar.quads[spriteNum], 40, carY, 0, 1)
 end
 
 
