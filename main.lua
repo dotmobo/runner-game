@@ -55,27 +55,38 @@ function love.update(dt)
     --     animCar.currentTime = animCar.currentTime - animation.duration
     -- end
     
-    -- This is in charge of player jumping.
-	if love.keyboard.isDown('space') then                     -- Whenever the player presses or holds down the Spacebar:
-        -- The game checks if the player is on the ground. Remember that when the player is on the ground, Y-Axis Velocity = 0.
+    -- android touch
+    local touches = love.touch.getTouches()
+    for _, touch in ipairs(touches) do
+        local tx, ty = love.touch.getPosition(touch)
         if carYspeed == 0 then
-            carYspeed = jumpHeight    -- The player's Y-Axis Velocity is set to it's Jump Height.
+            carYspeed = jumpHeight
         end
     end
-
-    if carYspeed ~= 0 then                                      -- The game checks if player has "jumped" and left the ground.
-		carY = carY + carYspeed * dt                -- This makes the character ascend/jump.
-		carYspeed = carYspeed - carGravity * dt -- This applies the gravity to the character.
+    -- keyboard
+	if love.keyboard.isDown('space') then
+        if carYspeed == 0 then
+            carYspeed = jumpHeight
+        end
+    end
+    -- jumping
+    if carYspeed ~= 0 then
+		carY = carY + carYspeed * dt
+		carYspeed = carYspeed - carGravity * dt
 	end
- 
-        -- This is in charge of collision, making sure that the character lands on the ground.
-    if carY > carGroundY then    -- The game checks if the player has jumped.
-		carYspeed = 0       -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
-        carY = carGroundY    -- The Y-Axis Velocity is set back to 0 meaning the character is on the ground again.
+    -- stop jumping
+    if carY > carGroundY then
+		carYspeed = 0
+        carY = carGroundY
 	end
 end
  
 function love.draw()
+    local scale = love.graphics.getWidth() / WIN_WIDTH
+    local scaleY = love.graphics.getHeight() / WIN_HEIGHT
+    if scaleY < scale then scale = scaleY end
+    love.graphics.scale(scale)
+
     love.graphics.draw(imgMoutainsBack,moutainsBack,0-moutainsBackX,0)
     love.graphics.draw(imgMoutainsBack,moutainsBack,WIN_WIDTH-moutainsBackX,0)
 
