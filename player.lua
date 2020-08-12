@@ -7,6 +7,7 @@ player.speedY = 0
 player.gravity = -500
 player.jumpHeight = -250
 player.groundY = WIN_HEIGHT-48-20
+player.alive = false
 
 
 function loadPlayer()
@@ -51,4 +52,11 @@ end
 function drawPlayer()
     local spriteNum = math.floor(player.anim.currentTime % #player.anim.quads) + 1
     love.graphics.draw(player.anim.spriteSheet, player.anim.quads[spriteNum], player.x, player.y, 0, 1)
+end
+
+function resetPlayer()
+    player.x = 72
+    player.y = WIN_HEIGHT-player.height-20
+    player.alive = true
+    player.speedY = 0
 end

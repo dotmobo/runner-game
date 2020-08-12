@@ -19,3 +19,8 @@ end
 function drawEnemy()
     love.graphics.draw(enemy.img,enemy.quad,enemy.x,enemy.y)
 end
+
+function resetEnemy()
+    enemy.x = WIN_WIDTH
+    enemy.y = WIN_HEIGHT-enemy.height-20
+end
