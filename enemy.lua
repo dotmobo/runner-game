@@ -1,8 +1,13 @@
 local enemy = {}
 enemy.width = 36
 enemy.height = 36
+enemy.groundY = 20
 enemy.x = WIN_WIDTH
-enemy.y = WIN_HEIGHT-enemy.height-20
+enemy.y = WIN_HEIGHT-enemy.height-enemy.groundY
+enemy.speedX = 200
+enemy.extraX = 200
+enemy.speedXMin = 200
+enemy.speedXMax = 700
 
 
 function loadEnemy()
@@ -13,7 +18,10 @@ function loadEnemy()
 end
 
 function updateEnemy(dt)
-    enemy.x = (enemy.x - 390*dt) % (WIN_WIDTH)
+    if enemy.x > WIN_WIDTH then
+        enemy.speedX = math.random(enemy.speedXMin, enemy.speedXMax)
+    end
+    enemy.x = (enemy.x - enemy.speedX*dt) % (WIN_WIDTH + enemy.extraX)
 end
 
 function drawEnemy()
@@ -22,5 +30,5 @@ end
 
 function resetEnemy()
     enemy.x = WIN_WIDTH
-    enemy.y = WIN_HEIGHT-enemy.height-20
+    enemy.y = WIN_HEIGHT-enemy.height-enemy.groundY
 end
