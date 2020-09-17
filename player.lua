@@ -14,6 +14,7 @@ function loadPlayer()
     player.img = love.graphics.newImage("images/car.png")
     player.img:setFilter("nearest","nearest")
     player.anim = newAnimation(player.img, player.width, player.height, 0)
+    player.jumpSound = love.audio.newSource("sounds/340629__mickyman5000__chainsaw-stop .wav", "static")
     return player
 end
 
@@ -34,6 +35,7 @@ function updatePlayer(dt)
     -- keyboard
 	if love.keyboard.isDown('space') then
         if player.speedY == 0 then
+            player.jumpSound:play()
             player.speedY = player.jumpHeight
         end
     end

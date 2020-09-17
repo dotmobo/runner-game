@@ -21,6 +21,11 @@ function love.load()
     loadLandscape()
     player = loadPlayer()
     enemy = loadEnemy()
+    crashSound = love.audio.newSource("sounds/151624__qubodup__clank-car-crash-collision.wav", "static")
+    music = love.audio.newSource("sounds/514960__deleted-user-11009121__synthwave-loop-100bpm.mp3", "static")
+    music:setLooping(true)
+    music:play()
+    music:setVolume(0.5)
     score = 0
 end
 
@@ -30,6 +35,7 @@ function love.update(dt)
         updatePlayer(dt)
         updateEnemy(dt)
         if collideRect(player, enemy) then
+            crashSound:play()
             player.alive = false
         end
 		score = score + 20*dt
