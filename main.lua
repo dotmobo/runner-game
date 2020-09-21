@@ -53,7 +53,7 @@ function love.draw()
 	    love.graphics.print({{2/255,9/255,4/255,1}, 'score: '..math.floor(score)},8,8)
     else
         love.graphics.printf({{2/255,9/255,4/255,1}, 'Multipla Adventure'},0,WIN_HEIGHT/3,WIN_WIDTH,"center")
-        love.graphics.printf({{2/255,9/255,4/255,1}, "Press to play and jump "},0,WIN_HEIGHT/3+32,WIN_WIDTH,"center")
+        love.graphics.printf({{2/255,9/255,4/255,1}, "Press space to play and jump "},0,WIN_HEIGHT/3+32,WIN_WIDTH,"center")
         if score ~= 0 then
             love.graphics.printf({{2/255,9/255,4/255,1}, "your score: ".. math.floor(score)},0,WIN_HEIGHT/3+64,WIN_WIDTH,"center")
         end
